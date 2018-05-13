@@ -17,7 +17,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
+
+app.use('/', routes);
+
 app.get('/smoke', (req,res)=>{
   return res.send('smoke test')
 })
+
 module.exports = app;
