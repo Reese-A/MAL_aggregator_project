@@ -7,7 +7,7 @@ const LocalStrategy = require('passport-local');
 const bcrypt = require('bcrypt');
 const Redis = require('connect-redis')(session);
 
-const User = require('./db/models/Client');
+const Client = require('./db/models/Client');
 
 
 const app = express();
@@ -45,7 +45,7 @@ passport.deserializeUser((client, done) => {
   new Client({
     id: client.id
   }).fetch()
-    .then((user) => {
+    .then((client) => {
       client = client.toJSON();
       return done(null, {
         id: client.id,
