@@ -1,5 +1,5 @@
 const express = require('express');
-// const routes = require('./routes');
+const routes = require('./routes');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const session = require('express-session');
@@ -92,7 +92,7 @@ passport.use(new LocalStrategy(function (username, password, done) {
 }));
 
 
-app.use('/', routes);
+app.use('/api', routes);
 
 app.get('/smoke', (req,res)=>{
   return res.send('smoke test')

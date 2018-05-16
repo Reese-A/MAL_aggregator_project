@@ -1,7 +1,7 @@
 const bookshelf = require('./bookshelf');
 
 class Client extends bookshelf.Model {
-  get tableName() { return 'client' }
+  get tableName() { return 'clients' }
   get hasTimestamps() { return true }
 
   // gallery() {
