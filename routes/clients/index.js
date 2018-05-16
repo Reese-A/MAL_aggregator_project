@@ -10,7 +10,7 @@ const router = express.Router();
 router.route('/')
   .post((req, res) => {
     console.log(req);
-    
+
     let {
       username,
       password,
@@ -44,6 +44,13 @@ router.route('/')
       })
     })
   })
+
+router.route('/login')
+  .post(
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login'
+  }))
 
 
 module.exports = router;
