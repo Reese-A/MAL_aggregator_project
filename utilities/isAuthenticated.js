@@ -4,7 +4,9 @@ module.exports = function (req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.redirect('/');
+    return res.json({
+      message: 'Please sign in'
+    });
   }
 };
 

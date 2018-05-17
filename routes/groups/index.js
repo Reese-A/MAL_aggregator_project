@@ -41,4 +41,29 @@ router.route('/')
       })
   })
 
+  .get(isAuthenticated, (req, res) => {
+    const userId = req.user.id;
+    console.log('GET REQUEST RECEIVED');
+    return Group
+      .where({
+        client_id: userId
+      })
+      .fetch()
+      .then((group) => {
+        const groupId = group.id
+        return User
+          .where({
+            group_id: groupId
+          })
+          .fetchAll()
+          .then((users) => {
+            console.log(users.models);
+            return res.json(users.models);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+  })
+
 module.exports = router;
