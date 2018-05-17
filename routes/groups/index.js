@@ -10,16 +10,35 @@ const router = express.Router();
 
 
 router.route('/')
-  .post(isAuthenticated, (req,res) => {
-    const group_id = req.user.id
+  .post(isAuthenticated, (req, res) => {
     let {
       name
     } = req.body;
 
     name = name.trim();
-    
 
+    return Group
+      .where({
+        client_id: req.user.id
+      })
+      .fetch()
+      .then((group) => {
+        console.log('THIS IS THE GROUP ', group);
+        return new User({
+            name,
+            group_id: group.id
+          })
+          .save()
+          .then((user) => {
+            console.log(user);
+            return res.json({
+              success: true
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      })
   })
-
 
 module.exports = router;
