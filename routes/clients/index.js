@@ -3,14 +3,14 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 
 const Client = require('../../db/models/Client');
+const Group = require('../../db/models/Group');
 
 const saltedRounds = 12;
 const router = express.Router();
 
 router.route('/')
   .post((req, res) => {
-    console.log(req);
-
+    const user_id = req.user.id;
     let {
       username,
       password,
@@ -18,6 +18,7 @@ router.route('/')
     } = req.body;
 
     username = username.trim();
+    email = email.trim();
 
     bcrypt.genSalt(saltedRounds, function (err, salt) {
       if (err) {
@@ -34,6 +35,13 @@ router.route('/')
           })
           .save()
           .then((user) => {
+            return new Group({
+              name: `${username}'s group`,
+              client_id: user.id
+            })
+            .save()
+          })
+          .then((group) => {
             return res.json({
               success: true
             })
@@ -47,10 +55,24 @@ router.route('/')
 
 router.route('/login')
   .post(
-    passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login'
-  }))
+    passport.authenticate('local'),
+    (req, res) => {
+      console.log('CLIENT', req.user);
+      console.log(req.user.username + ' logged in');
+      return res.json({
+        success: true
+      })
+    })
+
+router.route('/logout')
+  .get((req, res) => {
+    req.logout();
+    res.json({
+      success: true
+    });
+
+
+  });
 
 
 module.exports = router;
