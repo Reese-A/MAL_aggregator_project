@@ -10,7 +10,6 @@ const router = express.Router();
 
 router.route('/')
   .post((req, res) => {
-    const user_id = req.user.id;
     let {
       username,
       password,

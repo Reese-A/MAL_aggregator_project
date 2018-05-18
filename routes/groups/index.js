@@ -23,14 +23,12 @@ router.route('/')
       })
       .fetch()
       .then((group) => {
-        console.log('THIS IS THE GROUP ', group);
         return new User({
             name,
             group_id: group.id
           })
           .save()
           .then((user) => {
-            console.log(user);
             return res.json({
               success: true
             })
@@ -57,12 +55,15 @@ router.route('/')
           })
           .fetchAll()
           .then((users) => {
-            console.log(users.models);
-            return res.json(users.models);
+            console.log(users);
+            return res.json(users);
           })
           .catch((err) => {
             console.log(err);
           });
+      })
+      .catch((err) => {
+        console.log(err);
       })
   })
 
