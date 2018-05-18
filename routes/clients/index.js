@@ -47,6 +47,9 @@ router.route('/')
           })
           .catch((err) => {
             console.log(err);
+            return res.json({
+              success: false
+            })
           });
       })
     })
