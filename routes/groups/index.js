@@ -70,4 +70,36 @@ router.route('/')
       })
   })
 
+  router.route('/:name')
+  .delete((req, res) => {
+    console.log('RIGHT HERE: ', req.params);
+    const userId = req.user.id;
+    const name = req.params.name;
+    return Group
+      .where({
+        client_id: userId
+      })
+      .fetch()
+      .then((group) => {
+        const groupId = group.id
+        return User
+          .where({
+            group_id: groupId,
+            name: name
+          })
+          .destroy()
+          .then((data) => {
+            return res.json({
+              success: true
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  })
+
 module.exports = router;
