@@ -72,7 +72,6 @@ router.route('/')
 
   router.route('/:name')
   .delete((req, res) => {
-    console.log('RIGHT HERE: ', req.params);
     const userId = req.user.id;
     const name = req.params.name;
     return Group

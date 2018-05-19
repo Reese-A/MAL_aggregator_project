@@ -35,10 +35,10 @@ router.route('/')
           .save()
           .then((user) => {
             return new Group({
-              name: `${username}'s group`,
-              client_id: user.id
-            })
-            .save()
+                name: `${username}'s group`,
+                client_id: user.id
+              })
+              .save()
           })
           .then((group) => {
             return res.json({
@@ -54,7 +54,7 @@ router.route('/')
       })
     })
   })
-  
+
 
 router.route('/login')
   .post(
@@ -73,8 +73,6 @@ router.route('/logout')
     res.json({
       success: true
     });
-
-
   });
 
 
